@@ -1,0 +1,70 @@
+import UIKit
+
+class shapes:UIView{
+    
+    // use draw if you want it to draw the shapes 
+   override func draw(_ rect: CGRect) {
+        drawLine()
+    }
+    
+   func drawCircle(x:CGFloat,y:CGFloat,width:CGFloat,height:CGFloat){
+        let context = UIGraphicsGetCurrentContext()
+        context?.setLineWidth(4.0)
+        context?.setStrokeColor(UIColor.blue.cgColor)
+        var rectangle = CGRect()
+        rectangle.origin.x = x
+        rectangle.origin.y = y
+        rectangle.size.width = width
+        rectangle.size.height = height
+        context?.addEllipse(in: rectangle)
+        context?.setFillColor(UIColor.blue.cgColor)
+        context?.fillPath()
+        context?.strokePath()
+    }
+    func drawLine(){
+        let context = UIGraphicsGetCurrentContext()
+        // width of the line
+        context?.setLineWidth(4)
+        // color of the line
+        context?.setStrokeColor(UIColor.red.cgColor)
+        // starting point
+        context?.move(to: CGPoint(x: 50, y: 400))
+        // the second dot
+        context?.addLine(to: CGPoint(x: 50, y: 100))
+        // execute the line
+        context?.strokePath()
+    }
+    func drawHalfSquare(){
+        let context = UIGraphicsGetCurrentContext()
+        // width of the line
+        context?.setLineWidth(4)
+        // color of the line
+        context?.setStrokeColor(UIColor.red.cgColor)
+        // starting point
+        context?.move(to: CGPoint(x: 50, y: 400))
+        // the second dot
+        context?.addLine(to: CGPoint(x: 50, y: 100))
+        // the third dot
+        context?.addLine(to: CGPoint(x: 400, y: 100))
+        // the second dot
+        context?.addLine(to: CGPoint(x: 50, y: 400))
+        // execute the line
+        context?.strokePath()
+    }
+    func drawDiamond(){
+        let context = UIGraphicsGetCurrentContext()
+        context?.setLineWidth(2.0)
+        context?.setStrokeColor(UIColor.blue.cgColor)
+        context?.move(to: CGPoint(x:100, y: 100))
+        context?.addLine(to: CGPoint(x: 150, y: 150))
+        context?.addLine(to: CGPoint(x: 100, y: 200))
+        context?.addLine(to: CGPoint(x: 50, y: 150))
+        context?.addLine(to: CGPoint(x: 100, y: 100))
+        // fill the color
+        context?.setFillColor(UIColor.red.cgColor)
+        context?.fillPath()
+        context?.strokePath()
+    }
+
+
+}

@@ -1,0 +1,38 @@
+// examples:
+
+let redLayer = CALayer()
+
+    func setup() {
+        
+        redLayer.frame = CGRect(x: 50, y: 50, width: 50, height: 50)
+        redLayer.backgroundColor = UIColor.red.cgColor
+        self.view.layer.addSublayer(redLayer)
+        
+        redLayer.shadowColor = UIColor.black.cgColor
+        redLayer.shadowOpacity = 0.8
+        redLayer.shadowOffset = CGSize(width: 2, height: 2)
+        redLayer.shadowRadius = 3
+    }
+
+// add the animation
+    func moving(){
+        let shake = CABasicAnimation(keyPath: "position")
+        shake.duration = 1
+        shake.repeatCount = 2
+        shake.autoreverses = true
+        
+        let fromPoint = CGPoint(x: 50, y: redLayer.frame.origin.y + (redLayer.frame.size.height / 2))
+        let fromValue = NSValue(cgPoint: fromPoint)
+        
+        let toPoint = CGPoint(x: 170, y: redLayer.frame.origin.y + (redLayer.frame.size.height / 2))
+        let toValue = NSValue(cgPoint: toPoint)
+        
+        shake.fromValue = fromValue
+        shake.toValue = toValue
+        
+        redLayer.add(shake, forKey: "position")
+
+    }
+    
+    
+    

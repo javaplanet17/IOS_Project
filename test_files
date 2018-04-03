@@ -1,0 +1,42 @@
+
+
+class customButton: UIButton {
+    var name:UILabel!
+    var border:UIView!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    func setup(){
+        addSubview(name)
+    }
+}
+
+class CustomView : UIView {
+    var contentView:UIView?
+    // other outlets
+    
+    override init(frame: CGRect) { // for using CustomView in code
+        super.init(frame: frame)
+        self.commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) { // for using CustomView in IB
+        super.init(coder: aDecoder)
+        self.commonInit()
+        fatalError("NSCoding not supported")
+    }
+    
+    private func commonInit() {
+        Bundle.main.loadNibNamed("CustomView", owner: self, options: nil)
+        guard let content = contentView else { return }
+        content.frame = self.bounds
+        content.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        self.addSubview(content)
+    }
+}
