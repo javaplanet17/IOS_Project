@@ -1,0 +1,139 @@
+import UIKit
+
+class introViewController: UIViewController {
+    
+    var currentPageNumber = 0
+    let skipBtn:UIButton = {
+       let content = UIButton()
+        content.titleLabel?.textAlignment = .right
+        content.setTitle("Skip", for: .normal)
+        content.setTitleColor(.black, for: .normal)
+        content.titleLabel?.font = UIFont(name: "copperplate", size: 16)
+        content.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        content.addTarget(self, action: #selector(mainController), for: .touchUpInside)
+       return content
+    }()
+    
+    let contentSlider:introCollectionView = {
+       let content = introCollectionView()
+       return content
+    }()
+    
+    let prevBtn:UIButton = {
+        let content = UIButton()
+        content.addTarget(self, action: #selector(handlePrev), for: .touchUpInside)
+        content.titleLabel?.textAlignment = .right
+        content.setTitle("Prev", for: .normal)
+        content.setTitleColor(.black, for: .normal)
+        content.titleLabel?.font = UIFont(name: "copperplate", size: 16)
+        content.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        return content
+    }()
+    
+   private lazy var pageControl:UIPageControl = {
+       let content = UIPageControl()
+        content.currentPage = 0
+        content.numberOfPages = contentSlider.arrayImg.count
+        content.currentPageIndicatorTintColor = .red
+        content.pageIndicatorTintColor = .darkGray
+       return content
+    }()
+    let nextBtn:UIButton = {
+       let content = UIButton()
+       content.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+       content.titleLabel?.textAlignment = .right
+       content.setTitle("Next", for: .normal)
+       content.setTitleColor(.black, for: .normal)
+       content.titleLabel?.font = UIFont(name: "copperplate", size: 16)
+       content.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+       return content
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // important part to change the UIPageControl
+        self.contentSlider.onPageChange = {[weak self] pageNumber in
+            self?.pageControl.currentPage = pageNumber
+            self?.currentPageNumber = pageNumber
+            if pageNumber == 2 {
+                print(self?.contentSlider.arrayImg.count)
+                print(pageNumber)
+                self?.nextBtn.setTitle("Main", for: .normal)
+                self?.nextBtn.addTarget(self, action: #selector(self?.mainController), for: .touchUpInside)
+            }else {
+                self?.nextBtn.setTitle("Next", for: .normal)
+                self?.nextBtn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+            }
+        }
+        
+        skipBtn.translatesAutoresizingMaskIntoConstraints = false
+        contentSlider.translatesAutoresizingMaskIntoConstraints = false
+        prevBtn.translatesAutoresizingMaskIntoConstraints = false
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        nextBtn.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(skipBtn)
+        view.addSubview(contentSlider)
+        view.addSubview(prevBtn)
+        view.addSubview(pageControl)
+        view.addSubview(nextBtn)
+        
+        skipBtn.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        skipBtn.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        skipBtn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        skipBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        prevBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        prevBtn.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
+        prevBtn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        prevBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -18).isActive = true
+        pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        pageControl.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        pageControl.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        nextBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        nextBtn.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        nextBtn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        nextBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        contentSlider.topAnchor.constraint(equalTo: skipBtn.bottomAnchor, constant: 0).isActive = true
+        contentSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        contentSlider.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        contentSlider.bottomAnchor.constraint(equalTo: prevBtn.topAnchor, constant: 0).isActive = true
+    }
+
+    @objc func mainController(){
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "mainViewController") as! mainViewController
+        self.present(next, animated: true, completion: nil)
+    }
+
+    @objc private func handleNext(){
+        print("go forward")
+        let nextIndex = min(pageControl.currentPage + 1, contentSlider.arrayImg.count - 1)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
+        pageControl.currentPage = nextIndex
+        contentSlider.collectionViews.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        if pageControl.currentPage == 2 {
+            self.nextBtn.setTitle("Main", for: .normal)
+            self.nextBtn.addTarget(self, action: #selector(mainController), for: .touchUpInside)
+        }else {
+            self.nextBtn.setTitle("Next", for: .normal)
+            self.nextBtn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        }
+    }
+    
+    @objc private func handlePrev(){
+        print("go backward")
+        let nextIndex = min(pageControl.currentPage - 1, contentSlider.arrayImg.count + 1)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
+        pageControl.currentPage = nextIndex
+        contentSlider.collectionViews.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+}
+
