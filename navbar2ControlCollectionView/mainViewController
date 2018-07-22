@@ -1,0 +1,118 @@
+
+import UIKit
+
+class mainViewController: UIViewController {
+
+    let navbar:navbarView = {
+       let content = navbarView()
+        return content
+    }()
+    
+    let contentView:UIView = {
+        let content = UIView()
+        content.backgroundColor = .white
+        return content
+    }()
+    
+    let contentTxt:mainCollectionView = {
+       let content = mainCollectionView()
+        content.backgroundColor = .white
+        return content
+    }()
+    
+    let bottomBtn:UIButton = {
+       let content = UIButton()
+        content.backgroundColor = .blue
+        content.layer.cornerRadius = 10
+        return content
+    }()
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // important part to change the UIPageControl
+        self.contentTxt.onPageChange = {[weak self] pageNumber in
+            if pageNumber == 0 {
+                self?.notes()
+            }
+            if pageNumber == 1 {
+                self?.command()
+            }
+            if pageNumber == 2 {
+                self?.template()
+            }
+        }
+        
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentTxt.translatesAutoresizingMaskIntoConstraints = false
+        bottomBtn.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(navbar)
+        view.addSubview(contentView)
+        contentView.addSubview(contentTxt)
+        contentView.addSubview(bottomBtn)
+       
+        
+        navbar.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        navbar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        navbar.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        contentView.topAnchor.constraint(equalTo: navbar.bottomAnchor, constant: 0).isActive = true
+        contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        contentView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        
+        contentTxt.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0).isActive = true
+        contentTxt.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        contentTxt.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        contentTxt.bottomAnchor.constraint(equalTo: bottomBtn.topAnchor, constant: -5).isActive = true
+        
+        bottomBtn.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant:-5).isActive = true
+        bottomBtn.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        bottomBtn.widthAnchor.constraint(equalTo: view.widthAnchor,constant:-50).isActive = true
+        bottomBtn.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    }    
+    @objc func notes(){
+        navbar.notesV()
+        let indexPaths = IndexPath(item: 0, section: 0)
+        contentTxt.collectionViews.scrollToItem(at: indexPaths, at: .centeredHorizontally, animated: true)
+    }
+    @objc func command(){
+        navbar.commandV()
+        let indexPaths = IndexPath(item: 1, section: 0)
+        contentTxt.collectionViews.scrollToItem(at: indexPaths, at: .centeredHorizontally, animated: true)
+    }
+    @objc func template(){
+        navbar.templateV()
+        let indexPaths = IndexPath(item: 2, section: 0)
+        contentTxt.collectionViews.scrollToItem(at: indexPaths, at: .centeredHorizontally, animated: true)
+    }
+    
+    @objc func sideController(){
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "sideViewController") as! sideViewController
+        self.present(next, animated: true, completion: nil)
+    }
+    
+    @objc func profileController(){
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "profileViewController") as! profileViewController
+        self.present(next, animated: true, completion: nil)
+    }
+    
+    @objc func signinController(){
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "signinViewController") as! signinViewController
+        self.present(next, animated: true, completion: nil)
+    }
+    
+    @objc func factCheckController(){
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "factCheckViewController") as! factCheckViewController
+        self.present(next, animated: true, completion: nil)
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+}

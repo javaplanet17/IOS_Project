@@ -1,0 +1,151 @@
+import UIKit
+
+class navbarView: UIView {
+    
+    let sidebarBtn: UIButton = {
+       let content = UIButton()
+       content.setImage(UIImage(named: "sideMenu"), for: .normal)
+       content.addTarget(self, action: #selector(mainViewController.sideController), for: .touchUpInside)
+       return content
+    }()
+    let titleBtn:UIButton = {
+       let content = UIButton()
+       content.setTitle("Noct", for: .normal)
+       content.setTitleColor(.black, for: .normal)
+       content.titleLabel?.font = UIFont(name: "copperplate", size: 16)
+       content.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+       return content
+    }()
+    
+    let factCheckBtn:UIButton = {
+        let content = UIButton()
+        content.setImage(UIImage(named: "check"), for: .normal)
+        content.addTarget(self, action: #selector(mainViewController.factCheckController), for: .touchUpInside)
+        return content
+    }()
+    
+    let accountBtn:UIButton = {
+        let content = UIButton()
+        content.setImage(UIImage(named: "profile"), for: .normal)
+        content.addTarget(self, action: #selector(mainViewController.signinController), for: .touchUpInside)
+        return content
+    }()
+    
+    let NotesBtn:UIButton = {
+        let content = UIButton()
+        content.setTitle("Notes", for: .normal)
+        content.setTitleColor(.black, for: .normal)
+        content.titleLabel?.font = UIFont(name: "copperplate", size: 14)
+        content.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        content.addTarget(self, action: #selector(mainViewController.notes), for: .touchUpInside)
+        return content
+    }()
+    let CommandBtn:UIButton = {
+        let content = UIButton()
+        content.setTitle("Command", for: .normal)
+        content.setTitleColor(.black, for: .normal)
+        content.titleLabel?.font = UIFont(name: "copperplate", size: 14)
+        content.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        content.addTarget(self, action: #selector(mainViewController.command), for: .touchUpInside)
+        return content
+    }()
+    let TemplatelBtn:UIButton = {
+        let content = UIButton()
+        content.setTitle("Template", for: .normal)
+        content.setTitleColor(.black, for: .normal)
+        content.titleLabel?.font = UIFont(name: "copperplate", size: 14)
+        content.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        content.addTarget(self, action: #selector(mainViewController.template), for: .touchUpInside)
+        return content
+    }()
+    
+    let navbarBorder:UIView = {
+       let content = UIView()
+       content.backgroundColor = .black
+       return content
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    func setupViews(){
+        
+        sidebarBtn.translatesAutoresizingMaskIntoConstraints = false
+        titleBtn.translatesAutoresizingMaskIntoConstraints = false
+        factCheckBtn.translatesAutoresizingMaskIntoConstraints = false
+        accountBtn.translatesAutoresizingMaskIntoConstraints = false
+        NotesBtn.translatesAutoresizingMaskIntoConstraints = false
+        CommandBtn.translatesAutoresizingMaskIntoConstraints = false
+        TemplatelBtn.translatesAutoresizingMaskIntoConstraints = false
+        navbarBorder.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(sidebarBtn)
+        addSubview(titleBtn)
+        addSubview(factCheckBtn)
+        addSubview(accountBtn)
+        addSubview(NotesBtn)
+        addSubview(CommandBtn)
+        addSubview(TemplatelBtn)
+        addSubview(navbarBorder)
+        
+        sidebarBtn.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+        sidebarBtn.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        sidebarBtn.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        sidebarBtn.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        titleBtn.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+        titleBtn.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+        titleBtn.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        titleBtn.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        accountBtn.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+        accountBtn.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+        accountBtn.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        accountBtn.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        factCheckBtn.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+        factCheckBtn.rightAnchor.constraint(equalTo: accountBtn.leftAnchor, constant: -5).isActive = true
+        factCheckBtn.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        factCheckBtn.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        NotesBtn.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
+        NotesBtn.leftAnchor.constraint(equalTo: leftAnchor,constant:0).isActive = true
+        NotesBtn.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        NotesBtn.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        CommandBtn.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
+        CommandBtn.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        CommandBtn.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        CommandBtn.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        TemplatelBtn.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
+        TemplatelBtn.rightAnchor.constraint(equalTo: rightAnchor,constant:0).isActive = true
+        TemplatelBtn.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        TemplatelBtn.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        navbarBorder.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        navbarBorder.centerXAnchor.constraint(equalTo: NotesBtn.centerXAnchor, constant: 0).isActive = true
+        navbarBorder.widthAnchor.constraint(equalTo: TemplatelBtn.widthAnchor, constant: 0).isActive = true
+        navbarBorder.heightAnchor.constraint(equalToConstant: 5).isActive = true
+    }
+    
+    @objc func notesV(){
+        navbarBorder.center.x = NotesBtn.center.x
+        self.layoutIfNeeded()
+    }
+    @objc func commandV(){
+        navbarBorder.center.x = CommandBtn.center.x
+        self.layoutIfNeeded()
+    }
+    @objc func templateV(){
+        navbarBorder.center.x = TemplatelBtn.center.x
+        self.layoutIfNeeded()
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
